@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         LovedThings lt = new LovedThings();
-        System.out.println("Стартуем");
+        System.out.println("Введите данные");
         String scan = sc.nextLine();
         while (scan != "") {
             lt.addInfo(scan);
@@ -39,8 +39,8 @@ public class Main {
         System.out.print("Сколько раз вещь была записана в любимые - ");
         for (String key : lt.getAllThings().keySet()){
             System.out.print(key + " ");
-            Integer answ = lt.countOfThing(key);
-            System.out.print(answ);
+            Integer ans = lt.countOfThing(key);
+            System.out.print(ans);
             System.out.println("");
         }
     }

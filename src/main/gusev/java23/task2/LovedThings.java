@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class LovedThings {
+    // ключ - имя, значение - массив любимых вещей
     private Map<String, String[]> info = new HashMap<String, String[]>();
+    //ключ - вещь, значение - сколько раз ее записали в любимые
     private Map<String, Integer> allThings = new HashMap<String, Integer>();
 
     public Map<String, String[]> getInfo() {
@@ -16,17 +18,18 @@ public class LovedThings {
     public void setInfo(Map<String, String[]> info) {
         this.info = info;
     }
-    public Map<String, Integer> getAllThings(){
+
+    public Map<String, Integer> getAllThings() {
         return allThings;
     }
-    public void setAllThings(Map<String, Integer> allThings){
+
+    public void setAllThings(Map<String, Integer> allThings) {
         this.allThings = allThings;
     }
 
     public void addInfo(String newInfo) {
         String[] temp = newInfo.split(" *: *");
         String[] lovedThings = temp[1].split(" *, *");
-        Set<String> answer;
         for (int i = 0; i < lovedThings.length; i++) {
             if (allThings.keySet().contains(lovedThings[i]))
                 allThings.replace(lovedThings[i], allThings.get(lovedThings[i]) + 1);
@@ -34,6 +37,9 @@ public class LovedThings {
                 allThings.put(lovedThings[i], 1);
         }
         if (info.keySet().contains(temp[0])) {
+            for (String key : info.get(temp[0])) {
+                allThings.replace(key, allThings.get(key) - 1);
+            }
             info.replace(temp[0], lovedThings);
         } else {
             info.put(temp[0], lovedThings);
@@ -84,7 +90,7 @@ public class LovedThings {
         for (int i = 0; i < info.get(key).length; i++)
             answer.add(info.get(key)[i]);
         for (String name : info.keySet()) {
-            if (name != key) {
+            if (!name.equals(key)) {
                 for (int i = 0; i < info.get(name).length; i++) {
                     if (answer.contains(info.get(name)[i]))
                         answer.remove(info.get(name)[i]);
@@ -94,7 +100,9 @@ public class LovedThings {
         return answer;
     }
 
-    public Integer countOfThing(String key){
+    public Integer countOfThing(String key) {
+        if (allThings.get(key) == 0)
+            allThings.remove(key);
         return allThings.get(key);
     }
 }
